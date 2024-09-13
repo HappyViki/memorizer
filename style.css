@@ -1,0 +1,19 @@
+.line {
+    text-align: left;
+}
+
+.line:nth-child(even) {
+    background-color: pink;
+}
+
+.good {
+    color: green;
+}
+
+.bad {
+    color: red;
+}
+
+.okay {
+    color: orange;
+}
