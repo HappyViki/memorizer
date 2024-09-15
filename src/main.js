@@ -1,4 +1,8 @@
-import { diffString, extractLettersAndSpaces } from "./utils";
+import { 
+    calculateSimilarityPercentage,
+    diffString,
+    extractLettersAndSpaces 
+} from "./utils";
 
 let lines;
 let linesObject = {};
@@ -59,7 +63,7 @@ evaluateBtn.addEventListener("click", () => {
                 evaluatedLineColor = "bad";
             }
 
-            return `<p class="${evaluatedLineColor}">${obj.fullShownCount} peeks<br>${finishedLines[0] ? diffString(extractLettersAndSpaces(line), extractLettersAndSpaces(finishedLines[i])) :  line}</p>`;
+            return `<p class="${evaluatedLineColor}">${calculateSimilarityPercentage(extractLettersAndSpaces(line), extractLettersAndSpaces(finishedLines[i]))} right, with ${obj.fullShownCount} peeks<br>${finishedLines[0] ? diffString(extractLettersAndSpaces(line), extractLettersAndSpaces(finishedLines[i])) :  line}</p>`;
         }
     ).join('');
 })
