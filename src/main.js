@@ -1,4 +1,4 @@
-import { diffString } from "./utils";
+import { diffString, extractLettersAndSpaces } from "./utils";
 
 let lines;
 let linesObject = {};
@@ -59,7 +59,7 @@ evaluateBtn.addEventListener("click", () => {
                 evaluatedLineColor = "bad";
             }
 
-            return `<p class="${evaluatedLineColor}">${obj.fullShownCount} peeks<br>${finishedLines[0] ? diffString(line, finishedLines[i]) :  line}</p>`;
+            return `<p class="${evaluatedLineColor}">${obj.fullShownCount} peeks<br>${finishedLines[0] ? diffString(extractLettersAndSpaces(line), extractLettersAndSpaces(finishedLines[i])) :  line}</p>`;
         }
     ).join('');
 })

@@ -152,3 +152,9 @@ function diff( o, n ) {
   
   return { o: o, n: n };
 }
+
+export function extractLettersAndSpaces(string) {
+  console.log(string);
+  
+  return string?.toLowerCase()?.match(/\w|\s/g)?.join('') || "";
+}
