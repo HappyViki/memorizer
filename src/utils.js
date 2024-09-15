@@ -1,6 +1,7 @@
-let lines;
-let linesObject = {};
-let sliceAmount = 10;
+/*
+title: show diff between two strings 
+url: https://stackoverflow.com/questions/23955063/calculating-the-similarity-between-2-sentences
+*/
 
 function escape(s) {
     var n = s;
@@ -12,7 +13,7 @@ function escape(s) {
     return n;
 }
 
-function diffString( o, n ) {
+export function diffString( o, n ) {
   o = o.replace(/\s+$/, '');
   n = n.replace(/\s+$/, '');
 
@@ -151,73 +152,3 @@ function diff( o, n ) {
   
   return { o: o, n: n };
 }
-
-memorizeBtn.addEventListener("click", () => {
-    let id;
-    lines = initialText.value.split('\n');
-    formattedText.innerHTML = lines.map(
-        (line, i) => {
-            id = "line" + i;
-            linesObject[id] = {
-                isFullShowing: false,
-                fullShownCount: 0,
-                full: line,
-                partial: line.slice(0, sliceAmount), 
-                toggleText() {
-                    const result = this.isFullShowing ? this.partial : this.full;
-                    this.isFullShowing = !this.isFullShowing;
-                    if (this.isFullShowing) this.fullShownCount++;
-                    console.log(this);
-
-                    return result;
-                }
-            };
-
-            const input = showInputs.checked ? `<div class="input-group mb-3"><input type="text" class="form-control finished-line" placeholder="Finish your line..." aria-label="user line" aria-describedby="basic-addon1"></div>` : '';
-
-            return `<button id="${id}" class="btn btn-outline-dark btn-block line" type="button">${linesObject[id].partial}</button>` + input;
-        }
-    ).join('');
-
-    document.querySelectorAll(".line").forEach(
-        line => {
-            line.addEventListener("click", e => {
-                e.target.innerText = linesObject[e.target.id].toggleText();
-                
-            });
-            console.log(line);
-            
-        }
-    )
-
-    console.log(initialText.value.split('\n'));
-})
-
-evaluateBtn.addEventListener("click", () => {
-    const finishedLines = [...document.querySelectorAll(".finished-line")].map(
-        line => line.value || ''
-    );
-
-    console.log(finishedLines);
-    
-
-    evaluatedText.innerHTML = lines.map(
-        (line, i) => {
-            obj = linesObject["line" + i];
-
-            let evaluatedLineColor;
-
-            if (obj.fullShownCount === 0) {
-                evaluatedLineColor = "good";
-            } else if (obj.fullShownCount <= 2) {
-                evaluatedLineColor = "okay";
-            } else {
-                evaluatedLineColor = "bad";
-            }
-
-
-
-            return `<p class="${evaluatedLineColor}">${obj.fullShownCount} peeks<br>${diffString(line, finishedLines[i])}</p>`;
-        }
-    ).join('');
-})
