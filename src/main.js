@@ -15,7 +15,7 @@ initialText.addEventListener("input", () => {
 
 memorizeBtn.addEventListener("click", () => {    
     let id;
-    lines = initialText.value.split('\n');
+    lines = initialText.value.split('\n').filter(line=>line);
     formattedText.innerHTML = lines.map(
         (line, i) => {
             id = "line" + i;
@@ -56,7 +56,7 @@ evaluateBtn.addEventListener("click", () => {
 
     evaluatedText.innerHTML = lines.map(
         (line, i) => {
-            const diffPercent = phraseSimilarity(line, finishedLines[i]);
+            const diffPercent = phraseSimilarity(finishedLines[i], line);
             let obj = linesObject["line" + i];
             let evaluatedLineColor;
 
@@ -68,7 +68,7 @@ evaluateBtn.addEventListener("click", () => {
                 evaluatedLineColor = "bad";
             }
 
-            return `<p class="${evaluatedLineColor}">Right: ${diffPercent}% <br>Peeks: ${obj.fullShownCount}<br>${diffStringPlainText(line, finishedLines[i])}</p>`;
+            return `<p class="${evaluatedLineColor}">Right: ${diffPercent}% <br>Peeks: ${obj.fullShownCount}<br>${diffStringPlainText(finishedLines[i], line)}</p>`;
         }
     ).join('');
 })
