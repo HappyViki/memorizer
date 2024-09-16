@@ -4,11 +4,17 @@ import {
     extractLettersAndSpaces 
 } from "./utils";
 
+let text = localStorage.getItem("text") || "";
 let lines;
 let linesObject = {};
 let sliceAmount = 10;
 
-memorizeBtn.addEventListener("click", () => {
+initialText.value = text;
+initialText.addEventListener("input", () => {
+    localStorage.setItem("text", initialText.value);
+})
+
+memorizeBtn.addEventListener("click", () => {    
     let id;
     lines = initialText.value.split('\n');
     formattedText.innerHTML = lines.map(
