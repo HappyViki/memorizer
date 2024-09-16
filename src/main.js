@@ -56,21 +56,19 @@ evaluateBtn.addEventListener("click", () => {
 
     evaluatedText.innerHTML = lines.map(
         (line, i) => {
+            const diffPercent = phraseSimilarity(line, finishedLines[i]);
             let obj = linesObject["line" + i];
-
             let evaluatedLineColor;
 
-            if (obj.fullShownCount === 0) {
+            if ((obj.fullShownCount === 0) && (diffPercent > 95)) {
                 evaluatedLineColor = "good";
-            } else if (obj.fullShownCount <= 2) {
+            } else if ((obj.fullShownCount <= 2) && (diffPercent > 75)) {
                 evaluatedLineColor = "okay";
             } else {
                 evaluatedLineColor = "bad";
             }
 
-            diffStringPlainText(line, finishedLines[i])
-
-            return `<p class="${evaluatedLineColor}">Right: ${phraseSimilarity(line, finishedLines[i])}% <br>Peeks: ${obj.fullShownCount}<br>${diffStringPlainText(line, finishedLines[i])}</p>`;
+            return `<p class="${evaluatedLineColor}">Right: ${diffPercent}% <br>Peeks: ${obj.fullShownCount}<br>${diffStringPlainText(line, finishedLines[i])}</p>`;
         }
     ).join('');
 })
