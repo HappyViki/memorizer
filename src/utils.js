@@ -13,7 +13,7 @@ function escape(s) {
     return n;
 }
 
-export function diffString( o, n ) {
+function diffString( o, n ) {
   o = o.replace(/\s+$/, '');
   n = n.replace(/\s+$/, '');
 
@@ -153,7 +153,7 @@ function diff( o, n ) {
   return { o: o, n: n };
 }
 
-export function calculateSimilarityPercentage(phrase1, phrase2) {
+function calculateSimilarityPercentage(phrase1, phrase2) {
   // Levenshtein Distance calculation
   var distance = [];
   for (var i = 0; i <= phrase1.length; i++) {
@@ -179,6 +179,14 @@ export function calculateSimilarityPercentage(phrase1, phrase2) {
   return percentage.toFixed(2);
 }
 
-export function extractLettersAndSpaces(string) {  
+function extractLettersAndSpaces(string) {  
   return string?.toLowerCase()?.match(/\w|\s/g)?.join('') || "";
+}
+
+export function phraseSimilarity(phrase1, phrase2) {
+  return calculateSimilarityPercentage(extractLettersAndSpaces(phrase1), extractLettersAndSpaces(phrase2));
+}
+
+export function diffStringPlainText(phrase1, phrase2) {
+  return diffString(extractLettersAndSpaces(phrase1), extractLettersAndSpaces(phrase2));
 }

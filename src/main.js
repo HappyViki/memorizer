@@ -1,7 +1,6 @@
 import { 
-    calculateSimilarityPercentage,
-    diffString,
-    extractLettersAndSpaces 
+    diffStringPlainText,
+    phraseSimilarity
 } from "./utils";
 
 let text = localStorage.getItem("text") || "";
@@ -34,7 +33,7 @@ memorizeBtn.addEventListener("click", () => {
                 }
             };
 
-            const input = showInputs.checked ? `<div class="input-group mb-3"><input type="text" class="form-control finished-line" placeholder="Finish your line..." aria-label="user line" aria-describedby="basic-addon1"></div>` : '';
+            const input = `<div class="input-group mb-3"><input type="text" class="form-control finished-line" placeholder="Finish your line..." aria-label="user line" aria-describedby="basic-addon1"></div>`;
 
             return `<button id="${id}" class="btn btn-outline-dark btn-block line" type="button">${linesObject[id].partial}</button>` + input;
         }
@@ -52,7 +51,7 @@ memorizeBtn.addEventListener("click", () => {
 
 evaluateBtn.addEventListener("click", () => {
     const finishedLines = [...document.querySelectorAll(".finished-line")].map(
-        line => line.value || ''
+        line => line.value
     );    
 
     evaluatedText.innerHTML = lines.map(
@@ -69,7 +68,9 @@ evaluateBtn.addEventListener("click", () => {
                 evaluatedLineColor = "bad";
             }
 
-            return `<p class="${evaluatedLineColor}">${calculateSimilarityPercentage(extractLettersAndSpaces(line), extractLettersAndSpaces(finishedLines[i]))} right, with ${obj.fullShownCount} peeks<br>${finishedLines[0] ? diffString(extractLettersAndSpaces(line), extractLettersAndSpaces(finishedLines[i])) :  line}</p>`;
+            diffStringPlainText(line, finishedLines[i])
+
+            return `<p class="${evaluatedLineColor}">Right: ${phraseSimilarity(line, finishedLines[i])}% <br>Peeks: ${obj.fullShownCount}<br>${diffStringPlainText(line, finishedLines[i])}</p>`;
         }
     ).join('');
 })
