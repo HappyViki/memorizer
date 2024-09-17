@@ -4,9 +4,10 @@ import {
 } from "./utils.js";
 
 let text = localStorage.getItem("text") || "";
+let sliceAmount = localStorage.getItem("sliceAmount") || "0";
 let lines;
 let linesObject = {};
-let sliceAmount = 10;
+
 
 initialText.value = text;
 initialText.addEventListener("input", () => {
@@ -23,7 +24,7 @@ memorizeBtn.addEventListener("click", () => {
                 isFullShowing: false,
                 fullShownCount: 0,
                 full: line,
-                partial: line.slice(0, sliceAmount), 
+                partial: line.slice(0, sliceAmount) || "&#8203;", /* else: zero-width space */
                 toggleText() {
                     const result = this.isFullShowing ? this.partial : this.full;
                     this.isFullShowing = !this.isFullShowing;
@@ -33,7 +34,7 @@ memorizeBtn.addEventListener("click", () => {
                 }
             };
 
-            const input = `<div class="input-group mb-3"><input type="text" class="form-control finished-line" placeholder="Finish your line..." aria-label="user line" aria-describedby="basic-addon1"></div>`;
+            const input = `<div class="input-group mb-3"><input type="text" class="form-control finished-line" placeholder="Write your line..." aria-label="user line" aria-describedby="basic-addon1"></div>`;
 
             return `<button id="${id}" class="btn btn-outline-dark btn-block line" type="button">${linesObject[id].partial}</button>` + input;
         }
@@ -42,7 +43,7 @@ memorizeBtn.addEventListener("click", () => {
     document.querySelectorAll(".line").forEach(
         line => {
             line.addEventListener("click", e => {
-                e.target.innerText = linesObject[e.target.id].toggleText();
+                e.target.innerHTML = linesObject[e.target.id].toggleText();
                 
             });            
         }
