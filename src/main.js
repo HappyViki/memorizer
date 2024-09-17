@@ -2,6 +2,7 @@ import {
     diffStringPlainText,
     phraseSimilarity
 } from "./utils.js";
+import "./madiaRecorder.js";
 
 let text = localStorage.getItem("text") || "";
 let sliceAmount = localStorage.getItem("sliceAmount") || "0";
