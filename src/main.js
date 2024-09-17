@@ -1,7 +1,7 @@
 import { 
     diffStringPlainText,
     phraseSimilarity
-} from "./utils";
+} from "./utils.js";
 
 let text = localStorage.getItem("text") || "";
 let lines;
